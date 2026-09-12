@@ -324,7 +324,7 @@
   color: inherit;
 }
 
-/* admin toast + subtle inputs keep readability */
+/* keep delicate text on dark glass readable in light mode */
 [data-theme='light'] .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.7\)\] { box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
 [data-theme='light'] .shadow-\[0_24px_60px_-12px_rgba\(255\,47\,58\,0\.12\)_\,0_0_0_1px_rgba\(255\,255\,255\,0\.05\)\] { box-shadow: 0 16px 40px -12px rgba(0,0,0,0.1); }
 [data-theme='light'] .shadow-\[0_24px_80px_rgba\(0\,0\,0\,0\.95\)\] { box-shadow: 0 24px 80px rgba(0,0,0,0.2); }

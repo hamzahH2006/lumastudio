@@ -25,9 +25,8 @@ const en: TranslationDict = {
   // Showcase
   'showcase.title': 'Featured Products',
   'showcase.subtitle': 'Selected production systems and applications.',
-  'showcase.empty': 'No products yet. Open the Admin Dashboard to add your first project.',
+  'showcase.empty': 'No products yet. Add entries to data/projects.json to get started.',
   'showcase.emptyTitle': 'Nothing here yet',
-  'showcase.openAdmin': 'Open Admin Dashboard',
   'showcase.explore': 'Explore Product',
   'showcase.download': 'Download',
   'showcase.downloadToast': 'Downloading',
@@ -110,7 +109,6 @@ const en: TranslationDict = {
   'footer.contact': 'Contact',
   'footer.rights': '© 2026 {studio}. All rights reserved.',
   'footer.brand': 'LumaStudio builds ultra-fast, high-performance command engines and developer utilities designed for modern engineering teams.',
-  'footer.secretHint': '[Dev-Access: Click 1 more time]',
 
   // Detail page
   'detail.back': 'Back to Overview',
@@ -123,7 +121,7 @@ const en: TranslationDict = {
   'detail.screenshotsCount':
     '{count} image{count > 1 ? s : } attached to this project',
   'detail.noScreenshots': 'No screenshots yet',
-  'detail.noScreenshotsSub': 'Add image URLs (or Google Drive share links) via the Admin Dashboard.',
+  'detail.noScreenshotsSub': 'Place images in /public/apps/<slug>/screenshots/ and list the file names in data/projects.json.',
   'detail.expand': 'Click to expand',
   'detail.overview': 'Overview',
   'detail.details': 'Project Details',
@@ -139,7 +137,7 @@ const en: TranslationDict = {
   'detail.ctaProposal': 'Initiate Project Proposal',
   'detail.backPortfolio': 'Back to Portfolio',
   'detail.attachNote':
-    'File bundles live in this browser session only — re-attach the file in the Admin Dashboard to serve it again.',
+    'No download configured — add a file name to data/projects.json and place it in public/apps/<slug>/.',
   'detail.downloading': 'Downloading',
 };
 
@@ -166,9 +164,8 @@ const ar: TranslationDict = {
   // Showcase
   'showcase.title': 'منتجات مميزة',
   'showcase.subtitle': 'أنظمة وتطبيقات إنتاجية مختارة.',
-  'showcase.empty': 'لا توجد منتجات بعد. افتح لوحة التحكم لإضافة أول منتج.',
+  'showcase.empty': 'لا توجد منتجات بعد. أضف البيانات إلى data/projects.json للبدء.',
   'showcase.emptyTitle': 'لا يوجد شيء هنا بعد',
-  'showcase.openAdmin': 'فتح لوحة التحكم',
   'showcase.explore': 'استكشف المنتج',
   'showcase.download': 'تحميل',
   'showcase.downloadToast': 'جارٍ التحميل',
@@ -249,9 +246,8 @@ const ar: TranslationDict = {
   'footer.products': 'المنتجات',
   'footer.home': 'الرئيسية',
   'footer.contact': 'التواصل',
-  'footer.rights': '© 2026 {studio}. جميع الحقوق محفوظة.',
-  'footer.brand': 'تبني لوماستوديو محركات أوامر وأدوات للمطورين فائقة السرعة والأداء، مصممة لفرق الهندسة الحديثة.',
-  'footer.secretHint': '[وصول المطور: انقر مرة أخرى]',
+'footer.rights': '© 2026 {studio}. جميع الحقوق محفوظة.',
+  'footer.brand': 'تبني LumaStudio محركات أوامر فائقة السرعة وأدوات للمطورين مصممة لفرق الهندسة الحديثة.',
 
   // Detail page
   'detail.back': 'العودة للرئيسية',
@@ -263,7 +259,7 @@ const ar: TranslationDict = {
   'detail.screenshotsTitle': 'لقطات المنتج',
   'detail.screenshotsCount': '{count} صورة مرفقة بهذا المنتج',
   'detail.noScreenshots': 'لا توجد لقطات مرفقة بعد.',
-  'detail.noScreenshotsSub': 'أضف روابط صور (أو روابط مشاركة Google Drive) عبر لوحة التحكم.',
+  'detail.noScreenshotsSub': 'ضع الصور في المجلد /public/apps/<slug>/screenshots/ وأدرج أسماء الملفات في data/projects.json.',
   'detail.expand': 'انقر للتكبير',
   'detail.overview': 'نظرة عامة',
   'detail.details': 'تفاصيل المنتج',
@@ -277,7 +273,7 @@ const ar: TranslationDict = {
   'detail.interestedBody': 'ناقش مشروعك الخاص في الأنظمة أو التمويل الرقمي أو الويب مباشرة معنا.',
   'detail.ctaProposal': 'ابدأ عرض المشروع',
   'detail.backPortfolio': 'العودة للمنتجات',
-  'detail.attachNote': 'ملفات التطبيق تعمل جلسة المتصفح فقط — أعد إرفاقها لإتاحتها مجددًا.',
+  'detail.attachNote': 'لم يتم إعداد التنزيل — أضف اسم ملف إلى data/projects.json وضعه في public/apps/<slug>/.',
   'detail.downloading': 'جارٍ التحميل',
 };
 

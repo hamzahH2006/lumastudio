@@ -1,44 +1,17 @@
-import { Project } from '../types';
+import rawData from '../../data/projects.json';
+import { Project, SiteSettings } from '../types';
+import { normalizeProject } from '../utils/normalizeProject';
 
-const now = Date.now();
+const RAW = rawData as { settings?: Partial<SiteSettings>; projects?: unknown[] };
 
-export const INITIAL_PROJECTS: Project[] = [
-  {
-    id: 'omni-explorer',
-    slug: 'omni-explorer',
-    title: 'Omni Explorer',
-    category: 'Desktop',
-    description:
-      'The next-generation Windows file manager engineered for power users. Bypasses standard Explorer latency via direct NTFS Master File Table (MFT) raw index parsing for sub-50ms searches across terabytes.',
-    detailedDescription:
-      'Engineered for developers and systems engineers who demand zero-latency file operations. Interfaces directly with the NTFS Master File Table (MFT) for sub-50ms search across terabytes of storage, and consumes the USN Change Journal for live filesystem sync. Features include MFT Instant Search, System Tray Residency, Instant Super Peek, Safe Cache Cleaner, Process Unlocker, Visual Storage Analyzer, and GitHub Auto-Updates with SHA-256 integrity checks.',
-    screenshots: [],
-    downloadUrl: '#download-setup-exe',
-    downloadLabel: 'Download Setup.exe',
-    isFeatured: true,
-    techStack: ['C# Native Core', 'Flutter UI', 'Win32 API', 'USN Journal', 'DirectX'],
-    githubUrl: 'https://github.com/hamzah-dev/omni-explorer',
-    liveUrl: '',
-    createdAt: now,
-    updatedAt: now,
-  },
-  {
-    id: 'qpay',
-    slug: 'qpay-mobile',
-    title: 'QPay Mobile',
-    category: 'Mobile',
-    description:
-      'High-security mobile payment wallet and digital asset manager combining tactile neo-brutalism with hardware-enclave biometric encryption.',
-    detailedDescription:
-      'Designed for the next generation of digital payments. Combines a punchy modern neo-brutalist interface with end-to-end encrypted transaction rails, biometric vault authorization, and real-time ledger settlement. Engineered with Flutter and Dart for sub-16ms UI frame budgets, zero-latency transaction updates, dynamic virtual card cycling, and local state encryption using AES-256 GCM.',
-    screenshots: [],
-    downloadUrl: '#preview-qpay',
-    downloadLabel: 'Launch Simulator',
-    isFeatured: true,
-    techStack: ['Flutter', 'Dart', 'Fintech Architecture', 'AES-256 GCM', 'WebSockets'],
-    githubUrl: 'https://github.com/hamzah-dev/qpay-mobile',
-    liveUrl: '#preview-qpay',
-    createdAt: now,
-    updatedAt: now,
-  },
-];
+export const DEFAULT_SETTINGS: SiteSettings = {
+  studioName: RAW.settings?.studioName || 'LumaStudio',
+  ownerName: RAW.settings?.ownerName || 'Hamzah',
+  tagline: RAW.settings?.tagline || '',
+  email: RAW.settings?.email || '',
+  github: RAW.settings?.github || '',
+  linkedin: RAW.settings?.linkedin || '',
+  twitter: RAW.settings?.twitter || '',
+};
+
+export const INITIAL_PROJECTS: Project[] = (RAW.projects || []).map(normalizeProject);

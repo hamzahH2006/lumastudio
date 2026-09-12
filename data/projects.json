@@ -1,0 +1,43 @@
+{
+  "settings": {
+    "studioName": "LumaStudio",
+    "ownerName": "Hamzah",
+    "tagline": "LumaStudio builds ultra-fast, high-performance command engines and developer utilities designed for modern engineering teams.",
+    "email": "contact@lumastudio.io",
+    "github": "https://github.com",
+    "linkedin": "https://linkedin.com",
+    "twitter": "https://twitter.com"
+  },
+  "projects": [
+    {
+      "id": "omni-explorer",
+      "slug": "omni-explorer",
+      "title": "Omni Explorer",
+      "category": "Desktop",
+      "description": "The next-generation Windows file manager engineered for power users. Bypasses standard Explorer latency via direct NTFS Master File Table (MFT) raw index parsing for sub-50ms searches across terabytes.",
+      "detailedDescription": "Engineered for developers and systems engineers who demand zero-latency file operations. Interfaces directly with the NTFS Master File Table (MFT) for sub-50ms search across terabytes of storage, and consumes the USN Change Journal for live filesystem sync. Features include MFT Instant Search, System Tray Residency, Instant Super Peek, Safe Cache Cleaner, Process Unlocker, Visual Storage Analyzer, and GitHub Auto-Updates with SHA-256 integrity checks.",
+      "screenshots": [],
+      "icon": "/apps/omni-explorer/logo.png",
+      "file": "",
+      "downloadLabel": "Download Setup.exe",
+      "isFeatured": true,
+      "techStack": ["C# Native Core", "Flutter UI", "Win32 API", "USN Journal", "DirectX"],
+      "liveUrl": ""
+    },
+    {
+      "id": "qpay",
+      "slug": "qpay-mobile",
+      "title": "QPay Mobile",
+      "category": "Mobile",
+      "description": "High-security mobile payment wallet and digital asset manager combining tactile neo-brutalism with hardware-enclave biometric encryption.",
+      "detailedDescription": "Designed for the next generation of digital payments. Combines a punchy modern neo-brutalist interface with end-to-end encrypted transaction rails, biometric vault authorization, and real-time ledger settlement. Engineered with Flutter and Dart for sub-16ms UI frame budgets, zero-latency transaction updates, dynamic virtual card cycling, and local state encryption using AES-256 GCM.",
+      "screenshots": [],
+      "icon": "/apps/qpay-mobile/logo.png",
+      "file": "",
+      "downloadLabel": "Launch Simulator",
+      "isFeatured": true,
+      "techStack": ["Flutter", "Dart", "Fintech Architecture", "AES-256 GCM", "WebSockets"],
+      "liveUrl": ""
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Github, Linkedin, Mail, KeyRound } from 'lucide-react';
+import React from 'react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { Project, SiteSettings } from '../types';
 import { LumaStudioLogo } from './LumaStudioLogo';
 import { useLocale } from '../i18n/LocaleContext';
@@ -7,40 +7,11 @@ import { useLocale } from '../i18n/LocaleContext';
 interface FooterProps {
   settings: SiteSettings;
   projects: Project[];
-  onTriggerHiddenAdmin: () => void;
   onNavigate: (sectionId: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ settings, projects, onTriggerHiddenAdmin, onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }) => {
   const { t } = useLocale();
-  const [clickCount, setClickCount] = useState(0);
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [showSecretHint, setShowSecretHint] = useState(false);
-
-  // Triple-click handler on copyright text (hidden admin access)
-  const handleCopyrightClick = () => {
-    const newCount = clickCount + 1;
-    setClickCount(newCount);
-
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current);
-    }
-
-    if (newCount === 2) {
-      setShowSecretHint(true);
-    }
-
-    if (newCount >= 3) {
-      setClickCount(0);
-      setShowSecretHint(false);
-      onTriggerHiddenAdmin();
-    } else {
-      clickTimeoutRef.current = setTimeout(() => {
-        setClickCount(0);
-        setShowSecretHint(false);
-      }, 700);
-    }
-  };
 
   return (
     <footer className="relative border-t border-white/[0.08] bg-[#07080a] py-16 text-[#9c9c9d] font-sans text-xs z-10 select-none">
@@ -154,29 +125,13 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onTriggerHid
 
         </div>
 
-        {/* Bottom Copyright Row with Triple-Click Secret Trigger */}
+        {/* Bottom Copyright Row */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-[11px] text-[#848487]">
-
-          {/* THE HIDDEN TRIPLE CLICK TRIGGER */}
           <div className="relative">
-            <button
-              id="footer-copyright-trigger"
-              onClick={handleCopyrightClick}
-              className="text-[#848487] hover:text-white transition-colors cursor-default text-left select-none focus:outline-none"
-              title="Triple-click copyright text to trigger developer vault"
-            >
+            <span className="text-[#848487] text-left select-none">
               {t('footer.rights', { studio: settings.studioName })}
-            </button>
-
-            {/* Secret Hint feedback for double click */}
-            {showSecretHint && (
-              <span className="ml-2 inline-flex items-center gap-1 text-[10px] text-[#ffb347] font-bold animate-pulse">
-                <KeyRound className="w-3 h-3" />
-                <span>{t('footer.secretHint')}</span>
-              </span>
-            )}
+            </span>
           </div>
-
         </div>
 
       </div>

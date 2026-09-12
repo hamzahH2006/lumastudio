@@ -6,7 +6,6 @@ import {
 import { Project, SiteSettings } from '../types';
 import { formatDriveImageUrl } from '../utils/driveUrlParser';
 import { downloadProject } from '../utils/downloadProject';
-import { formatFileSize } from '../utils/attachmentStore';
 import { useLocale } from '../i18n/LocaleContext';
 
 interface ProjectDetailPageProps {
@@ -130,16 +129,6 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
               </button>
             )}
           </div>
-
-          {project.attachment && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0b0d11] border border-[#ff6b4a]/25 text-[11px] text-[#848487]">
-              <FolderKanban className="w-3.5 h-3.5 text-[#ffb347]" />
-              <span className="text-white font-medium max-w-[220px] truncate">{project.attachment.name}</span>
-              <span>
-                {project.attachment.size > 0 ? formatFileSize(project.attachment.size) : 'binary'}
-              </span>
-            </div>
-          )}
 
           {downloadNote && (
             <div className="max-w-xl px-3 py-2 rounded-xl bg-[#ff2f3a]/10 border border-[#ff2f3a]/30 text-[#ffb347] text-[11px]">

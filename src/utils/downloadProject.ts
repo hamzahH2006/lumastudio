@@ -1,36 +1,24 @@
 import { Project } from '../types';
-import { getAttachedFile } from './attachmentStore';
 
-// Downloads the project's binary: prefers the in-session object URL, then the
-// persisted /apps/... path written by the asset pipeline.
-// Returns false when nothing is available this session.
+// Hands the user the product's distributable file from public/apps/<slug>/.
+// External links open in a new tab; same-origin /apps/... files are saved.
 export const downloadProject = (project: Project): boolean => {
-  const attached = getAttachedFile(project.id);
-  if (attached) {
-    const a = document.createElement('a');
-    a.href = attached.url;
-    a.download = attached.file.name;
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+  const url = project.downloadUrl;
+  if (!url || url.startsWith('#') || url.startsWith('data:')) return false;
+
+  const fileName = url.split('/').pop() || 'download';
+
+  if (/^https?:\/\//i.test(url)) {
+    window.open(url, '_blank', 'noopener,noreferrer');
     return true;
   }
 
-  if (project.attachment?.url && !project.attachment.url.startsWith('blob:')) {
-    if (project.attachment.url.startsWith('/')) {
-      window.open(project.attachment.url, '_blank', 'noopener,noreferrer');
-    } else {
-      const a = document.createElement('a');
-      a.href = project.attachment.url;
-      a.download = project.attachment.name;
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-    return true;
-  }
-
-  return false;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.rel = 'noopener noreferrer';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  return true;
 };

@@ -12,7 +12,6 @@ interface HomePageProps {
   projects: Project[];
   settings: SiteSettings;
   onNavigatePage: (path: string) => void;
-  onOpenAdmin: () => void;
   onOpenContact: () => void;
 }
 
@@ -20,7 +19,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   projects,
   settings,
   onNavigatePage,
-  onOpenAdmin,
   onOpenContact,
 }) => {
   const { t } = useLocale();
@@ -136,7 +134,6 @@ export const HomePage: React.FC<HomePageProps> = ({
       <Footer
         settings={settings}
         projects={projects}
-        onTriggerHiddenAdmin={onOpenAdmin}
         onNavigate={(path) => {
           if (path.startsWith('/')) {
             onNavigatePage(path);
