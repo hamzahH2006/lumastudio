@@ -1,10 +1,11 @@
-import { Project, ServiceItem } from '../types';
+import { Project } from '../types';
 
 const now = Date.now();
 
 export const INITIAL_PROJECTS: Project[] = [
   {
     id: 'omni-explorer',
+    slug: 'omni-explorer',
     title: 'Omni Explorer',
     category: 'Desktop',
     description:
@@ -23,6 +24,7 @@ export const INITIAL_PROJECTS: Project[] = [
   },
   {
     id: 'qpay',
+    slug: 'qpay-mobile',
     title: 'QPay Mobile',
     category: 'Mobile',
     description:
@@ -40,51 +42,3 @@ export const INITIAL_PROJECTS: Project[] = [
     updatedAt: now,
   },
 ];
-
-export const SERVICES: ServiceItem[] = [
-  {
-    id: 'systems-engineering',
-    title: 'Low-Level Systems & Native Tools',
-    tag: 'C# / Win32 / Kernel API',
-    description: 'Designing sub-millisecond Windows & Unix utility software, file system indexing (MFT/USN), memory-mapped I/O, and hardware-accelerated desktop applications.',
-    skills: ['Win32 API', 'MFT Parsing', 'Memory Optimization', 'Process Interop', 'Low Latency'],
-    icon: 'Terminal',
-  },
-  {
-    id: 'fullstack-dev',
-    title: 'Full-Stack Scalable Architecture',
-    tag: 'TypeScript / React / Node.js',
-    description: 'Building end-to-end web applications, microservices, and reactive user interfaces that balance raw speed with bulletproof state management and typography.',
-    skills: ['React 19', 'TypeScript', 'Node.js', 'REST & GraphQL', 'Tailwind CSS'],
-    icon: 'Layers',
-  },
-  {
-    id: 'cross-platform',
-    title: 'Cross-Platform Applications',
-    tag: 'Flutter / Dart / Desktop',
-    description: 'Creating cohesive mobile and desktop products with bespoke design systems, 60fps rendering pipelines, and unified business logic across OS targets.',
-    skills: ['Flutter Engine', 'State Management', 'Neo-Brutalist UI', 'Offline First', 'NFC & Biometrics'],
-    icon: 'Smartphone',
-  },
-  {
-    id: 'performance-security',
-    title: 'Performance Profiling & Security',
-    tag: 'Diagnostics / Cryptography',
-    description: 'Auditing bottlenecks in I/O pipelines, profiling frame drops, securing API endpoints with AES-256 and OAuth, and hardening runtime binaries.',
-    skills: ['CPU Profiling', 'AES-256 GCM', 'Memory Leaks', 'Code Hardening', 'Telemetry'],
-    icon: 'ShieldCheck',
-  },
-];
-
-export const BIO_SUMMARY = {
-  name: 'Hamzah',
-  role: 'Systems & Full-Stack Developer',
-  email: 'hamzah60040607@gmail.com',
-  github: 'https://github.com/hamzah',
-  linkedin: 'https://linkedin.com/in/hamzah-dev',
-  location: 'Global / Remote',
-  availability: 'Available for High-Impact Projects & Systems Consulting',
-  terminalGreeting: 'root@hamzah-box:~# sysinfo --target=fullstack',
-  systemSpecs: 'Arch Linux / Windows 11 Enterprise (Dual-Kernel Dev)',
-  primaryStack: ['C#', 'TypeScript', 'Flutter', 'Win32', 'React', 'Node.js', 'Python'],
-};

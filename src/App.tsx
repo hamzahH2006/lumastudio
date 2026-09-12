@@ -4,7 +4,6 @@ import { FloatingPillNav } from './components/FloatingPillNav';
 import { HomePage } from './pages/HomePage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { NotFoundPage } from './components/NotFoundPage';
-import { CVModal } from './components/CVModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { INITIAL_PROJECTS } from './data/initialData';
 import {
@@ -43,11 +42,10 @@ export default function App() {
   });
 
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [isCVOpen, setIsCVOpen] = useState(false);
 
-  // Open the admin panel directly via hidden routes only
+  // Open the admin panel directly via the hidden route only
   useEffect(() => {
-    if (currentPath === '/admin' || currentPath === '/system-vault') {
+    if (currentPath === '/admin') {
       setIsAdminOpen(true);
     }
   }, [currentPath]);
@@ -137,7 +135,7 @@ export default function App() {
 
   const handleCloseAdmin = () => {
     setIsAdminOpen(false);
-    if ((currentPath === '/admin' || currentPath === '/system-vault') && window.location.pathname !== '/') {
+    if (currentPath === '/admin' && window.location.pathname !== '/') {
       window.history.pushState({}, '', '/');
       setCurrentPath('/');
     }
@@ -175,12 +173,9 @@ export default function App() {
               onNavigatePage={handleNavigate}
               onOpenAdmin={() => setIsAdminOpen(true)}
               onOpenContact={() => handleNavigate('contact')}
-              onOpenCV={() => setIsCVOpen(true)}
             />
           )}
         </main>
-
-        <CVModal isOpen={isCVOpen} onClose={() => setIsCVOpen(false)} />
 
         <AdminDashboardModal
           isOpen={isAdminOpen}

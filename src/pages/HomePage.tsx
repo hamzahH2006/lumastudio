@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { ArrowRight, Download, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { BasaltHero } from '../components/BasaltHero';
 import { AboutSection } from '../components/AboutSection';
 import { ContactSection } from '../components/ContactSection';
 import { Footer } from '../components/Footer';
 import { ProductPhotoShowcase } from '../components/ProductPhotoShowcase';
 import { Project, SiteSettings } from '../types';
-import { downloadProject } from '../utils/downloadProject';
 import { useLocale } from '../i18n/LocaleContext';
 
 interface HomePageProps {
@@ -15,7 +14,6 @@ interface HomePageProps {
   onNavigatePage: (path: string) => void;
   onOpenAdmin: () => void;
   onOpenContact: () => void;
-  onOpenCV: () => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -24,17 +22,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigatePage,
   onOpenAdmin,
   onOpenContact,
-  onOpenCV,
 }) => {
-  const [activeNotification, setActiveNotification] = useState<string | null>(null);
   const { t } = useLocale();
-
-  const triggerToast = (msg: string) => {
-    setActiveNotification(msg);
-    setTimeout(() => {
-      setActiveNotification(null);
-    }, 3200);
-  };
 
   const handleScrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
@@ -46,20 +35,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   const displayedProjects = projects.filter((p) => p.isFeatured).length > 0
     ? projects.filter((p) => p.isFeatured)
     : projects;
-
-  const handleDownload = (project: Project) => {
-    if (downloadProject(project)) {
-      triggerToast(`${t('showcase.downloadToast')} ${project.attachment?.name || project.downloadLabel}`);
-      return;
-    }
-    if (project.downloadUrl && !project.downloadUrl.startsWith('#')) {
-      window.open(project.downloadUrl, '_blank', 'noopener,noreferrer');
-    } else if (project.attachment) {
-      triggerToast(t('detail.attachNote'));
-    } else {
-      triggerToast(`${project.downloadLabel || t('showcase.download')} requested`);
-    }
-  };
 
   return (
     <div className="min-h-screen text-[#c8c8cb] selection:bg-[#ff2f3a]/30 selection:text-[#ffb347]">
@@ -131,14 +106,16 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </button>
 
-                  {(project.downloadUrl || project.attachment) && (
+                  {project.liveUrl && project.liveUrl !== '#' && (
                     <button
-                      onClick={() => handleDownload(project)}
+                      onClick={() =>
+                        window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
+                      }
                       className="py-3 px-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-[#c8c8cb] hover:text-white font-sans text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                      title={project.attachment?.name || project.downloadLabel || t('showcase.download')}
+                      title={t('detail.livePreview')}
                     >
-                      <Download className="w-3.5 h-3.5 text-[#ffb347]" />
-                      <span>{t('showcase.download')}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-[#ffb347]" />
+                      <span>{t('detail.livePreview')}</span>
                     </button>
                   )}
                 </div>
@@ -168,14 +145,6 @@ export const HomePage: React.FC<HomePageProps> = ({
           }
         }}
       />
-
-      {/* Toast Notification */}
-      {activeNotification && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#07080a]/95 backdrop-blur-xl border border-[#ff6b4a]/30 shadow-[0_8px_30px_rgba(255,47,58,0.25)] text-white text-[13px] font-sans animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <CheckCircle2 className="w-4 h-4 text-[#ffb347] shrink-0" />
-          <span className="font-medium">{activeNotification}</span>
-        </div>
-      )}
 
     </div>
   );

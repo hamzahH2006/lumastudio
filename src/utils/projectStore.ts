@@ -1,4 +1,5 @@
 import { Project, ProjectCategory } from '../types';
+import { slugify } from './slugify';
 
 const STORAGE_KEY = 'lumastudio_portfolio_projects';
 const LEGACY_KEYS = ['hamzah_portfolio_projects', 'lumastudio_projects', 'lumastudio_projects_seeded'];
@@ -30,15 +31,18 @@ export const normalizeProject = (raw: unknown): Project => {
         name: a.name,
         size: typeof a.size === 'number' ? a.size : 0,
         type: typeof a.type === 'string' ? a.type : 'application/octet-stream',
+        url: typeof a.url === 'string' && a.url ? a.url : undefined,
       };
     }
   }
 
   const category = CATEGORIES.includes(r.category as ProjectCategory) ? (r.category as ProjectCategory) : 'Desktop';
+  const rawTitle = typeof r.title === 'string' && r.title ? r.title : 'Untitled Project';
 
   return {
     id: typeof r.id === 'string' && r.id ? r.id : `project-${now}-${Math.random().toString(36).slice(2, 9)}`,
-    title: typeof r.title === 'string' && r.title ? r.title : 'Untitled Project',
+    slug: typeof r.slug === 'string' && r.slug ? slugify(r.slug) : slugify(rawTitle),
+    title: rawTitle,
     category,
     description: typeof r.description === 'string' ? r.description : '',
     detailedDescription: typeof r.detailedDescription === 'string' ? r.detailedDescription : '',
@@ -107,5 +111,3 @@ export const updateProjectInList = (projects: Project[], id: string, updates: Pa
 export const deleteProjectFromList = (projects: Project[], id: string): Project[] => {
   return projects.filter((p) => p.id !== id);
 };
-
-export const projectIdToSlug = (id: string): string => id.toLowerCase().replace(/[^a-z0-9]+/g, '-');

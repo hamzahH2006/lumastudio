@@ -32,11 +32,11 @@ const DEFAULT_PHOTOS: Record<string, string> = {
       <rect x="60" y="200" width="780" height="380" rx="28" fill="url(#card-grad)"/>
       <circle cx="760" cy="260" r="90" fill="#ffffff" opacity="0.08"/>
       <circle cx="160" cy="520" r="140" fill="#ffffff" opacity="0.05"/>
-      <text x="100" y="260" fill="#ffffff" opacity="0.85" font-family="monospace" font-size="16" letter-spacing="3">QPAY PLATINUM DEBIT</text>
+      <text x="100" y="260" fill="#ffffff" opacity="0.85" font-family="system-ui, sans-serif" font-size="16" letter-spacing="3">QPAY MOBILE WALLET</text>
       <text x="100" y="340" fill="#ffffff" font-family="system-ui" font-size="48" font-weight="800">$28,450.90</text>
-      <text x="100" y="380" fill="#ffffff" opacity="0.85" font-family="monospace" font-size="16">Available Instant Balance</text>
-      <text x="100" y="520" fill="#ffffff" font-family="monospace" font-size="20" letter-spacing="4">&#8226;&#8226;&#8226;&#8226;  &#8226;&#8226;&#8226;&#8226;  &#8226;&#8226;&#8226;&#8226;  8824</text>
-      <text x="660" y="520" fill="#ffffff" font-family="monospace" font-size="18" font-weight="700">08/29</text>
+      <text x="100" y="380" fill="#ffffff" opacity="0.85" font-family="system-ui, sans-serif" font-size="16">Available Instant Balance</text>
+      <text x="100" y="520" fill="#ffffff" font-family="system-ui, sans-serif" font-size="20" letter-spacing="4">&#8226;&#8226;&#8226;&#8226;  &#8226;&#8226;&#8226;&#8226;  &#8226;&#8226;&#8226;&#8226;  8824</text>
+      <text x="660" y="520" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="700">08/29</text>
       <text x="60" y="760" fill="#ffffff" font-family="system-ui, sans-serif" font-size="22" font-weight="700">Verified Ledger Stream</text>
     </svg>
   `)}`,
@@ -57,7 +57,7 @@ const DEFAULT_PHOTOS: Record<string, string> = {
       <rect x="2" y="2" width="1396" height="846" rx="18" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
       <rect x="0" y="0" width="1400" height="54" rx="20" fill="#0c0e12"/>
       <circle cx="36" cy="27" r="6.5" fill="#ff5f56"/><circle cx="58" cy="27" r="6.5" fill="#ffbd2e"/><circle cx="80" cy="27" r="6.5" fill="#27c93f"/>
-      <text x="120" y="32" fill="#ffffff" font-family="system-ui" font-size="15" font-weight="700">Omni Explorer v2.4.1</text>
+      <text x="120" y="32" fill="#ffffff" font-family="system-ui" font-size="15" font-weight="700">Omni Explorer — Desktop</text>
       <text x="20" y="670" fill="#ffffff" font-family="system-ui" font-size="30" font-weight="700">High-Speed File Management Engine</text>
       <text x="20" y="706" fill="#ffb347" font-family="system-ui" font-size="16">Direct MFT parsing — sub-50ms searches across millions of files.</text>
       <rect x="20" y="730" width="420" height="60" rx="14" fill="rgba(255,107,74,0.15)" stroke="rgba(255,107,74,0.4)" stroke-width="2"/>

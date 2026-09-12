@@ -96,7 +96,7 @@ export const LumaStudioLogo: React.FC<LumaStudioLogoProps> = ({
             LumaStudio
           </span>
           {badge && (
-            <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[10px] font-mono text-[#ffb347]">
+            <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[10px] font-sans text-[#ffb347]">
               {badge}
             </span>
           )}

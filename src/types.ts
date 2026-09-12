@@ -4,10 +4,12 @@ export interface ProjectAttachment {
   name: string;
   size: number;
   type: string;
+  url?: string;
 }
 
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   category: ProjectCategory;
   description: string;

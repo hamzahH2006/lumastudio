@@ -110,7 +110,7 @@ export const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({
             or <span className="text-[#ffb347] underline underline-offset-2">browse from device</span> — .exe · .apk · .zip · .dmg
           </div>
           <div className="text-[10px] text-[#666]">
-            Stored locally in-browser and bound to the Download button — no cloud
+            Synced to /public/apps/&lt;slug&gt;/binaries on Save — survives reloads &amp; deploys
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@ export const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({
             <div className="text-[11px] text-[#848487] flex items-center gap-1.5">
               <span>{attachedSize > 0 ? formatFileSize(attachedSize) : 'Unknown size'}</span>
               <span className="w-1 h-1 rounded-full bg-[#666]" />
-              <span>{file ? 'attached this session' : 'metadata saved (re-attach to serve after reload)'}</span>
+              <span>{file ? 'attached this session — press Save & Sync Assets to persist' : 'metadata only — re-attach the file to sync it'}</span>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">

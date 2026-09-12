@@ -159,10 +159,10 @@ export const ScreenshotUploader: React.FC<ScreenshotUploaderProps> = ({
             {isDragging ? 'Drop the images here' : 'Drag & drop images here'}
           </div>
           <div className="text-[#848487] text-[11px]">
-            or <span className="text-[#ffb347] underline underline-offset-2">browse from device</span> — stored locally, no cloud
+            or <span className="text-[#ffb347] underline underline-offset-2">browse from device</span> — synced to /public/apps/&lt;slug&gt;/screenshots on Save
           </div>
           <div className="text-[10px] text-[#666]">
-            PNG · JPG · WEBP · GIF — auto-compressed to fit in browser storage
+            PNG · JPG · WEBP · GIF — committed to the app's asset folder when you Save
           </div>
         </div>
       </div>

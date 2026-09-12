@@ -9,6 +9,8 @@ import { ScreenshotUploader } from './ScreenshotUploader';
 import { AttachmentUploader } from './AttachmentUploader';
 import { AppIconUploader } from './AppIconUploader';
 import { attachFile, removeFile, getAttachedFile } from '../utils/attachmentStore';
+import { slugify } from '../utils/slugify';
+import { uploadLumaAsset, toBase64, iconFilename, screenshotFilename } from '../utils/assetPipeline';
 import { resetSettings, DEFAULT_SETTINGS } from '../utils/settingsStore';
 
 interface AdminDashboardModalProps {
@@ -26,6 +28,7 @@ interface AdminDashboardModalProps {
 }
 
 const EMPTY_FORM: ProjectFormData = {
+  slug: '',
   title: '',
   category: 'Desktop',
   description: '',
@@ -65,6 +68,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [activeTab, setActiveTab] = useState<'projects' | 'settings'>('projects');
   const [settingsDraft, setSettingsDraft] = useState<SiteSettings>(settings);
   const [saveToast, setSaveToast] = useState(false);
+  const [assetStatus, setAssetStatus] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   // Add-Project modal state
@@ -208,11 +212,12 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     setAddForm((f) => ({ ...f, attachment: undefined }));
   };
 
-  const handleSubmitAdd = (e: React.FormEvent) => {
+  const handleSubmitAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!addForm.title.trim()) return;
     const newProject = onAddProject({
       ...addForm,
+      slug: addForm.slug ? slugify(addForm.slug) : slugify(addForm.title),
       title: addForm.title.trim(),
       screenshots: addForm.screenshots.map(formatDriveImageUrl),
       downloadUrl: formatDriveImageUrl(addForm.downloadUrl.trim()),
@@ -221,7 +226,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     if (addAttachmentFile) {
       attachFile(newProject.id, addAttachmentFile);
     }
-    setEditingProjects((prev) => [...prev, newProject]);
+    const patch = await syncProjectAssets(newProject);
+    onUpdateProject(newProject.id, patch);
+    setEditingProjects((prev) => [...prev, { ...newProject, ...patch }]);
     setSelectedProjectId(newProject.id);
     setShowAddModal(false);
     showToast();
@@ -250,6 +257,59 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   };
 
   const catOptions: ProjectCategory[] = ['Mobile', 'Desktop', 'Web'];
+
+  // Pushes any locally-buffered assets (icon, screenshots, binary) into the
+  // GitHub-style folder /public/apps/<slug>/<kind> via the Vite middleware.
+  const syncProjectAssets = async (p: Project): Promise<Partial<Project>> => {
+    const slug = p.slug || slugify(p.title);
+
+    let icon = p.icon;
+    if (icon && icon.startsWith('data:image/')) {
+      icon = await uploadLumaAsset(slug, 'icons', iconFilename(slug, icon), icon);
+    }
+
+    const screenshots: string[] = [];
+    for (let i = 0; i < p.screenshots.length; i += 1) {
+      const s = p.screenshots[i];
+      screenshots.push(
+        s.startsWith('data:image/')
+          ? await uploadLumaAsset(slug, 'screenshots', screenshotFilename(i, s), s)
+          : s
+      );
+    }
+
+    let attachment = p.attachment;
+    const attached = getAttachedFile(p.id);
+    if (attached?.file) {
+      const base64 = await toBase64(attached.file);
+      const url = await uploadLumaAsset(slug, 'binaries', attached.file.name, base64);
+      attachment = {
+        name: p.attachment?.name || attached.file.name,
+        size: attached.file.size,
+        type: attached.file.type || 'application/octet-stream',
+        url,
+      };
+    }
+
+    return { slug, icon, screenshots, attachment };
+  };
+
+  const handleSaveChanges = async () => {
+    setAssetStatus('Syncing assets to /public/apps folders …');
+    try {
+      const next: Project[] = [];
+      for (const p of editingProjects) {
+        const patch = await syncProjectAssets(p);
+        next.push({ ...p, ...patch, downloadUrl: formatDriveImageUrl(p.downloadUrl), updatedAt: Date.now() });
+      }
+      setEditingProjects(next);
+      onSaveProjects(next);
+      setAssetStatus('Saved — assets are live under /public/apps/<slug> (commit to deploy).');
+      showToast();
+    } catch (err) {
+      setAssetStatus(`Sync failed: ${(err as Error).message}`);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl overflow-y-auto">
@@ -546,17 +606,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
               <div className="pt-4 border-t border-white/[0.08] space-y-2">
                 <button
-                  onClick={() => {
-                    onSaveProjects(editingProjects.map((p) => ({
-                      ...p,
-                      screenshots: p.screenshots.map(formatDriveImageUrl),
-                    })));
-                    showToast();
-                  }}
+                  onClick={handleSaveChanges}
                   className="w-full py-2.5 rounded-xl bg-gradient-to-b from-[#e6e6e6] to-[#cfcfcf] hover:from-white hover:to-[#e0e0e0] text-[#1c1c1e] font-bold flex items-center justify-center gap-2 cursor-pointer shadow-[0_4px_16px_rgba(255,255,255,0.1)] transition-all"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Save Changes</span>
+                  <span>Save &amp; Sync Assets</span>
                 </button>
 
                 <button
@@ -577,6 +631,12 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 <div className="p-2 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[11px] flex items-center gap-1.5">
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Saved to Local Storage</span>
+                </div>
+              )}
+              {assetStatus && (
+                <div className="p-2 rounded-lg bg-[#0b0d11] border border-[#ff6b4a]/25 text-[#c8c8cb] text-[11px] flex items-start gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-[#ffb347] shrink-0" />
+                  <span>{assetStatus}</span>
                 </div>
               )}
             </div>
@@ -607,6 +667,13 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         ))}
                       </select>
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {renderInput('App Slug (asset folder)', currentProject.slug, (v) =>
+                      handleUpdateCurrentProject({ slug: slugify(v) }),
+                      { placeholder: 'my-app — maps to /public/apps/my-app/' }
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -789,6 +856,13 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 addForm.title,
                 (v) => setAddForm((f) => ({ ...f, title: v })),
                 { placeholder: 'e.g. Afaq' }
+              )}
+
+              {renderInput(
+                'App Slug (asset folder)',
+                addForm.slug,
+                (v) => setAddForm((f) => ({ ...f, slug: slugify(v) })),
+                { placeholder: 'auto-derived from the name if left empty' }
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

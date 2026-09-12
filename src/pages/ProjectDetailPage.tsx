@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  ArrowLeft, Download, ExternalLink, Github, Image as ImageIcon,
+  ArrowLeft, Download, ExternalLink, Image as ImageIcon,
   X, Maximize2, ArrowRight, FolderKanban, Sparkles
 } from 'lucide-react';
 import { Project, SiteSettings } from '../types';
@@ -118,18 +118,6 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({
                 <Download className="w-4 h-4" />
                 <span>{project.downloadLabel || t('detail.download')}</span>
               </button>
-            )}
-
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-[#c8c8cb] hover:text-white font-sans text-xs transition-all cursor-pointer"
-              >
-                <Github className="w-4 h-4 text-[#ffb347]" />
-                <span>{t('detail.sourceCode')}</span>
-              </a>
             )}
 
             {project.liveUrl && project.liveUrl !== '#' && (

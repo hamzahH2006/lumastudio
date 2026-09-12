@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Upload, ImagePlus, X, AlertTriangle, Check } from 'lucide-react';
 
 interface AppIconUploaderProps {
-  iconUrl?: string;
-  onIconChange: (url: string) => void;
-  onIconRemove: () => void;
+  value?: string;
+  onChange: (url: string) => void;
 }
 
 const fileToDataUrl = (file: File): Promise<string> => {
@@ -17,9 +16,8 @@ const fileToDataUrl = (file: File): Promise<string> => {
 };
 
 export const AppIconUploader: React.FC<AppIconUploaderProps> = ({
-  iconUrl,
-  onIconChange,
-  onIconRemove,
+  value: iconUrl,
+  onChange,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +35,7 @@ export const AppIconUploader: React.FC<AppIconUploaderProps> = ({
       return;
     }
     const url = await fileToDataUrl(file);
-    onIconChange(url);
+    onChange(url);
     setDone(true);
     setTimeout(() => setDone(false), 1800);
   };
@@ -94,7 +92,7 @@ export const AppIconUploader: React.FC<AppIconUploaderProps> = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onIconRemove();
+                  onChange('');
                 }}
                 className="absolute -top-1.5 -right-1.5 p-1 rounded-full bg-black/80 border border-white/10 text-white hover:text-[#ff2f3a] transition-colors cursor-pointer"
                 title="Remove icon"
@@ -113,7 +111,7 @@ export const AppIconUploader: React.FC<AppIconUploaderProps> = ({
               Drag & drop or browse for an app icon
             </div>
             <div className="text-[#848487] text-[11px]">
-              PNG, JPG, WEBP or SVG — shown on product cards
+              PNG, JPG, WEBP or SVG — synced to /public/apps/&lt;slug&gt;/icons on Save
             </div>
             {iconUrl && (
               <button
@@ -140,7 +138,7 @@ export const AppIconUploader: React.FC<AppIconUploaderProps> = ({
       {done && (
         <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[11px] flex items-center gap-2">
           <Check className="w-3.5 h-3.5 text-emerald-400" />
-          <span>App icon saved.</span>
+          <span>App icon staged — saved to its asset folder on Save.</span>
         </div>
       )}
     </div>
