@@ -19,7 +19,7 @@
       "screenshots": [],
       "icon": "/apps/omni-explorer/logo.png",
       "file": "",
-      "downloadLabel": "Download Setup.exe",
+      "downloadLabel": "Setup.zip",
       "isFeatured": true,
       "techStack": ["C# Native Core", "Flutter UI", "Win32 API", "USN Journal", "DirectX"],
       "liveUrl": ""
@@ -34,7 +34,7 @@
       "screenshots": [],
       "icon": "/apps/qpay-mobile/logo.png",
       "file": "",
-      "downloadLabel": "Launch Simulator",
+      "downloadLabel": "Setup.apk",
       "isFeatured": true,
       "techStack": ["Flutter", "Dart", "Fintech Architecture", "AES-256 GCM", "WebSockets"],
       "liveUrl": ""
