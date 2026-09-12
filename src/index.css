@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #07080a;
+    --text-muted: #9c9c9d;
+    --aurora-crimson: #ff2f3a;
+    --aurora-coral: #ff6b4a;
+    --aurora-amber: #ffb347;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #07080a;
+    color: #ffffff;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* ========================================================================= */
+/* HERO HEADLINE WITH EXPLICIT !important AS SPECIFIED IN SPEC               */
+/* ========================================================================= */
+.hero-headline {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 64px !important;
+  line-height: 1.1 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.035em !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 1024px) {
+  .hero-headline {
+    font-size: 50px !important;
+    line-height: 1.12 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-headline {
+    font-size: 36px !important;
+    line-height: 1.18 !important;
+  }
+}
+
+/* Warm text gradient accent word */
+.warm-gradient-accent,
+.warm-gradient-text {
+  background: linear-gradient(135deg, #ffb347 0%, #ff6b4a 48%, #ff2f3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* ========================================================================= */
+/* TACTILE KEYCAP-RAISED OS DOWNLOAD BUTTONS                                 */
+/* ========================================================================= */
+.keycap-button {
+  background-color: #e6e6e6;
+  color: #2f3031;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow:
+    0 0 0 2px #07080a,
+    0 3px 0 #b3b3b5,
+    0 0 14px rgba(255, 255, 255, 0.19),
+    0 8px 24px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 #ffffff,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.keycap-button:hover {
+  background-color: #ededed;
+  box-shadow:
+    0 0 0 2px #07080a,
+    0 3px 0 #b8b8ba,
+    0 0 18px rgba(255, 255, 255, 0.28),
+    0 10px 28px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 #ffffff,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.keycap-button:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 2px #07080a,
+    0 1px 0 #b3b3b5,
+    0 0 10px rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 #ffffff,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================================================= */
+/* LIVING WARM AURORA - LIGHT-BLADE CSS KEYFRAMES                            */
+/* Staggered ~15-22s loops with 0% set to full bloom                         */
+/* ========================================================================= */
+@keyframes blade-drift-1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-28deg) scale(1);
+    opacity: 0.85;
+  }
+  35% {
+    transform: translate3d(45px, -30px, 0) rotate(-25deg) scale(1.08);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translate3d(-30px, 20px, 0) rotate(-31deg) scale(0.94);
+    opacity: 0.78;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-28deg) scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes blade-drift-2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-35deg) scale(1);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate3d(-40px, 35px, 0) rotate(-38deg) scale(1.06);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translate3d(25px, -20px, 0) rotate(-32deg) scale(0.95);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-35deg) scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes blade-drift-3 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-22deg) scale(1);
+    opacity: 0.75;
+  }
+  45% {
+    transform: translate3d(30px, 25px, 0) rotate(-20deg) scale(0.92);
+    opacity: 0.85;
+  }
+  85% {
+    transform: translate3d(-20px, -35px, 0) rotate(-25deg) scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-22deg) scale(1);
+    opacity: 0.75;
+  }
+}
+
+@keyframes blade-drift-4 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-40deg) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(-50px, -20px, 0) rotate(-43deg) scale(1.09);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-40deg) scale(1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes aurora-core-pulse {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.aurora-blade-1 {
+  animation: blade-drift-1 16s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-blade-2 {
+  animation: blade-drift-2 19s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-blade-3 {
+  animation: blade-drift-3 22s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-blade-4 {
+  animation: blade-drift-4 17.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.aurora-core {
+  animation: aurora-core-pulse 15s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Blinking warm caret */
+@keyframes warm-caret {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-warm-caret {
+  animation: warm-caret 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #07080a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1c22;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6b4a;
+}
+
+/* ========================================================================= */
+/* LIGHT THEME OVERRIDE LAYER                                                */
+/* Map the measured dark palette to a clean light surface.                    */
+/* Triggered via [data-theme='light'] on <html>.                             */
+/* ========================================================================= */
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+[data-theme='light'] body {
+  background-color: #f4f4f1;
+  color: #1c1c1e;
+}
+
+[data-theme='light'] .bg-\[\#07080a\] { background-color: #f4f4f1; }
+[data-theme='light'] .bg-\[\#0b0d11\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#08090a\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#0a0c10\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#121518\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#0d0f12\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#0d0f14\] { background-color: #ffffff; }
+[data-theme='light'] .bg-\[\#1a1c22\] { background-color: #e3e3de; }
+
+/* primary text */
+[data-theme='light'] .text-\[\#c8c8cb\] { color: #36363f; }
+[data-theme='light'] .text-\[\#848487\] { color: #6c6c76; }
+[data-theme='light'] .text-\[\#9c9c9d\] { color: #55555f; }
+[data-theme='light'] .text-\[\#666\] { color: #8f8f97; }
+[data-theme='light'] .text-\[\#2f3031\] { color: #1c1c1e; }
+[data-theme='light'] .text-\[\#404142\] { color: #33333d; }
+[data-theme='light'] .text-\[\#555\] { color: #a2a2aa; }
+[data-theme='light'] .placeholder-\[\#656567\]::placeholder { color: #b0b0b8; }
+[data-theme='light'] .placeholder-\[\#555\]::placeholder { color: #b0b0b8; }
+[data-theme='light'] .placeholder-\[\#656567\] { color: #b0b0b8; }
+
+/* text-white carve-outs: keep headings/hero white -> ink */
+[data-theme='light'] h1,
+[data-theme='light'] h2,
+[data-theme='light'] h3,
+[data-theme='light'] h4 {
+  color: #1c1c1e;
+}
+
+/* subtle fills: white/xx utilities become light neutral surfaces */
+[data-theme='light'] .bg-white\/\[0\.02\] { background-color: #f0f0ed; }
+[data-theme='light'] .bg-white\/\[0\.03\] { background-color: #f0f0ed; }
+[data-theme='light'] .bg-white\/\[0\.04\] { background-color: #eceae6; }
+[data-theme='light'] .bg-white\/\[0\.06\] { background-color: #eceae6; }
+[data-theme='light'] .bg-white\/\[0\.08\] { background-color: #ffffff; }
+
+/* borders: white/xx become light warm neutrals */
+[data-theme='light'] .border-white\/\[0\.05\] { border-color: #e3e3de; }
+[data-theme='light'] .border-white\/\[0\.06\] { border-color: #e3e3de; }
+[data-theme='light'] .border-white\/\[0\.08\] { border-color: #e0e0db; }
+[data-theme='light'] .border-white\/\[0\.1\] { border-color: #dcdcd6; }
+[data-theme='light'] .border-white\/\[0\.12\] { border-color: #dcdcd6; }
+[data-theme='light'] .border-white\/\[0\.14\] { border-color: #d4d4ce; }
+[data-theme='light'] .border-white\/\[0\.16\] { border-color: #cfcfc9; }
+[data-theme='light'] .border-white\/\[0\.25\] { border-color: #bdbdb6; }
+
+/* form controls: dark ink text on light inputs */
+[data-theme='light'] input,
+[data-theme='light'] textarea,
+[data-theme='light'] select {
+  color: #1c1c1e;
+  background-color: #ffffff;
+}
+[data-theme='light'] input::placeholder,
+[data-theme='light'] textarea::placeholder {
+  color: #b0b0b8;
+}
+[data-theme='light'] select option {
+  background-color: #ffffff;
+  color: #1c1c1e;
+}
+
+/* link/nav text that was white on dark glass is now ink */
+[data-theme='light'] button,
+[data-theme='light'] a {
+  color: inherit;
+}
+
+/* admin toast + subtle inputs keep readability */
+[data-theme='light'] .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.7\)\] { box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+[data-theme='light'] .shadow-\[0_24px_60px_-12px_rgba\(255\,47\,58\,0\.12\)_\,0_0_0_1px_rgba\(255\,255\,255\,0\.05\)\] { box-shadow: 0 16px 40px -12px rgba(0,0,0,0.1); }
+[data-theme='light'] .shadow-\[0_24px_80px_rgba\(0\,0\,0\,0\.95\)\] { box-shadow: 0 24px 80px rgba(0,0,0,0.2); }
+
+/* custom scrollbar for light */
+[data-theme='light'] ::-webkit-scrollbar-track { background: #f4f4f1; }
+[data-theme='light'] ::-webkit-scrollbar-thumb { background: #d5d5cf; }

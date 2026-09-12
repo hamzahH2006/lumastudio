@@ -1,0 +1,6 @@
+{
+  "name": "Basalt - Living Aurora Developer Tool",
+  "description": "LumaStudio - Next-gen desktop tools, command engines, and developer utilities featuring Omni Explorer and QPay with warm aurora aesthetics, tactile keycaps, and interactive command launcher.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
