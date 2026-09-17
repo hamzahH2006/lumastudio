@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LivingAuroraBackground } from './components/LivingAuroraBackground';
-import { FloatingPillNav } from './components/FloatingPillNav';
+import { TopBar } from './components/TopBar';
 import { HomePage } from './pages/HomePage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
-import { NotFoundPage } from './components/NotFoundPage';
-import { INITIAL_PROJECTS, DEFAULT_SETTINGS } from './data/initialData';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { AdminLogin } from './admin/AdminLogin';
+import { AdminPanel } from './admin/AdminPanel';
+import { DEFAULT_SETTINGS } from './data/initialData';
+import { Project } from './types';
+import { isAuthenticated } from './admin/auth';
+import {
+  loadProjects,
+  persistProjects,
+  PROJECTS_CHANGE_EVENT,
+} from './data/projectsStore';
 import { LocaleProvider } from './i18n/LocaleContext';
 
 export default function App() {
@@ -15,8 +24,11 @@ export default function App() {
     return '/';
   });
 
-  // Read-only static data sourced from data/projects.json + public/apps assets.
-  const projects = INITIAL_PROJECTS;
+  const [projects, setProjects] = useState<Project[]>(() => loadProjects());
+  const [, forceRender] = useState(0);
+
+  // Settings stay read-only (static source). Projects are user-editable via the
+  // admin panel and persisted to localStorage on top of src/data/projects.json.
   const settings = DEFAULT_SETTINGS;
 
   useEffect(() => {
@@ -28,7 +40,17 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const handleNavigate = (path: string) => {
+  useEffect(() => {
+    const sync = () => setProjects(loadProjects());
+    window.addEventListener(PROJECTS_CHANGE_EVENT, sync);
+    window.addEventListener('storage', sync);
+    return () => {
+      window.removeEventListener(PROJECTS_CHANGE_EVENT, sync);
+      window.removeEventListener('storage', sync);
+    };
+  }, []);
+
+  const handleNavigate = useCallback((path: string) => {
     if (path.startsWith('/')) {
       if (window.location.pathname !== path) {
         window.history.pushState({}, '', path);
@@ -50,9 +72,51 @@ export default function App() {
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  };
+  }, [currentPath]);
+
+  const onProjectsChange = useCallback((next: Project[]) => {
+    setProjects(next);
+    persistProjects(next);
+  }, []);
 
   // ---------- Route resolution ----------
+  const isAdminRoute = currentPath.startsWith('/admin');
+  const adminAuthed = isAuthenticated();
+
+  if (isAdminRoute) {
+    // /admin/login is the only unlock door. Any other /admin/* path answers
+    // with the public 404 page for non-authenticated visitors, so the panel
+    // stays fully invisible.
+    if (currentPath === '/admin/login' && !adminAuthed) {
+      return (
+        <LocaleProvider>
+          <AdminLogin
+            onSuccess={() => {
+              forceRender((t) => t + 1);
+              handleNavigate('/admin');
+            }}
+          />
+        </LocaleProvider>
+      );
+    }
+
+    if (adminAuthed) {
+      return (
+        <LocaleProvider>
+          <AdminPanel
+            projects={projects}
+            settings={settings}
+            onProjectsChange={onProjectsChange}
+            onExit={() => handleNavigate('/')}
+            onNavigate={handleNavigate}
+          />
+        </LocaleProvider>
+      );
+    }
+
+    return <NotFoundPage attemptedPath={currentPath} onGoHome={() => handleNavigate('/')} />;
+  }
+
   const projectMatch = currentPath.match(/^\/projects\/([^/]+)/);
   const projectId = projectMatch ? decodeURIComponent(projectMatch[1]) : null;
   const activeProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
@@ -63,11 +127,11 @@ export default function App() {
 
   return (
     <LocaleProvider>
-      <div className="relative min-h-screen w-full bg-[#07080a] text-white selection:bg-[#ff2f3a]/30 selection:text-[#ffb347] overflow-x-hidden font-sans">
+      <div className="relative min-h-screen w-full bg-surface text-ink selection:bg-crimson/30 selection:text-amber overflow-x-hidden font-sans">
 
         <LivingAuroraBackground />
 
-        <FloatingPillNav
+        <TopBar
           currentPath={currentPath}
           onNavigate={handleNavigate}
           onCtaClick={() => handleNavigate(ctaTarget)}

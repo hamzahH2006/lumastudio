@@ -80,15 +80,15 @@ export const ProductPhotoShowcase: React.FC<ProductPhotoShowcaseProps> = ({
   // Display-only compact mode (Homepage Cards)
   if (compact) {
     return (
-      <div className={`relative rounded-xl overflow-hidden border border-white/[0.08] bg-[#07080a] shadow-2xl ${className}`}>
-        <div className="h-56 sm:h-64 overflow-hidden relative flex items-center justify-center bg-[#07080a]">
+      <div className={`relative rounded-xl overflow-hidden border border-line bg-surface card-shadow ${className}`}>
+        <div className="h-56 sm:h-64 overflow-hidden relative flex items-center justify-center bg-surface">
           <img
             src={currentImage}
             alt={title}
             className="w-full h-full object-cover object-top transition-transform duration-300 group-hover/photo:scale-[1.02]"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07080a] via-transparent to-transparent opacity-80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80 pointer-events-none" />
         </div>
 
         {/* App Icon */}
@@ -97,7 +97,7 @@ export const ProductPhotoShowcase: React.FC<ProductPhotoShowcaseProps> = ({
             <img
               src={icon}
               alt={`${title} icon`}
-              className="w-11 h-11 rounded-xl object-cover border border-white/[0.15] shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
+              className="w-11 h-11 rounded-xl object-cover border border-line-strong shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -109,19 +109,19 @@ export const ProductPhotoShowcase: React.FC<ProductPhotoShowcaseProps> = ({
   // Display-only Showcase Mode
   return (
     <div className={`space-y-4 ${className}`}>
-      <div className="relative rounded-2xl bg-[#07080a] border border-white/[0.1] overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.95)]">
+      <div className="relative rounded-2xl bg-surface border border-line overflow-hidden card-shadow-deep">
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-10" />
 
-        <div className="px-5 py-3 bg-white/[0.02] border-b border-white/[0.06] flex items-center justify-between gap-3 text-xs">
+        <div className="px-5 py-3 bg-fill border-b border-line flex items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             {icon && (
               <img src={icon} alt="" className="w-6 h-6 rounded-lg object-cover" referrerPolicy="no-referrer" />
             )}
-            <span className="text-white font-semibold">{title}</span>
+            <span className="text-ink font-semibold">{title}</span>
           </div>
           <button
             onClick={() => setLightboxOpen(true)}
-            className="px-2.5 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-[#c8c8cb] hover:text-white transition-colors cursor-pointer"
+            className="px-2.5 py-1.5 rounded-lg bg-fill hover:bg-fill-strong border border-line text-body hover:text-ink transition-colors cursor-pointer"
             title="View full resolution"
           >
             <Maximize2 className="w-3.5 h-3.5" />
@@ -129,17 +129,17 @@ export const ProductPhotoShowcase: React.FC<ProductPhotoShowcaseProps> = ({
         </div>
 
         <div
-          className="relative min-h-[360px] sm:min-h-[480px] w-full flex items-center justify-center p-4 sm:p-8 bg-gradient-to-b from-[#090b0e] to-[#07080a] cursor-zoom-in group"
+          className="relative min-h-[360px] sm:min-h-[480px] w-full flex items-center justify-center p-4 sm:p-8 bg-gradient-to-b from-card to-surface cursor-zoom-in group"
           onClick={() => setLightboxOpen(true)}
         >
           <img
             src={currentImage}
             alt={title}
-            className="max-h-[680px] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+            className="max-h-[680px] w-auto max-w-full rounded-xl object-contain card-shadow"
             referrerPolicy="no-referrer"
           />
           <span className="absolute bottom-4 right-4 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md border border-white/10 text-white text-[11px] flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <Sparkles className="w-3.5 h-3.5 text-[#ffb347]" />
+            <Sparkles className="w-3.5 h-3.5 text-amber" />
             <span>Click to expand</span>
           </span>
         </div>
@@ -159,7 +159,7 @@ export const ProductPhotoShowcase: React.FC<ProductPhotoShowcaseProps> = ({
           <img
             src={currentImage}
             alt={`${title} fullscreen`}
-            className="max-h-[85vh] max-w-full object-contain rounded-2xl shadow-2xl border border-white/10"
+            className="max-h-[85vh] max-w-full object-contain rounded-2xl card-shadow border border-white/10"
             referrerPolicy="no-referrer"
             onClick={(e) => e.stopPropagation()}
           />

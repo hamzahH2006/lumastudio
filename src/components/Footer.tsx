@@ -3,6 +3,7 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 import { Project, SiteSettings } from '../types';
 import { LumaStudioLogo } from './LumaStudioLogo';
 import { useLocale } from '../i18n/LocaleContext';
+import { localizeProject } from '../utils/localize';
 
 interface FooterProps {
   settings: SiteSettings;
@@ -11,10 +12,11 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }) => {
-  const { t } = useLocale();
+  const { t, lang } = useLocale();
+  const localizedProjects = projects.map((p) => localizeProject(p, lang));
 
   return (
-    <footer className="relative border-t border-white/[0.08] bg-[#07080a] py-16 text-[#9c9c9d] font-sans text-xs z-10 select-none">
+    <footer className="relative border-t border-line bg-surface py-16 text-muted font-sans text-xs z-10 select-none">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
         {/* Top Footer Grid */}
@@ -23,10 +25,10 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
           {/* Col 1: Brand & Identity */}
           <div className="md:col-span-6 space-y-4 text-left">
             <div className="flex items-center gap-2.5">
-              <LumaStudioLogo showWordmark={true} size={24} wordmarkClassName="font-sans font-bold text-lg text-white tracking-tight" />
+              <LumaStudioLogo showWordmark={true} size={24} wordmarkClassName="font-sans font-bold text-lg text-ink tracking-tight" />
             </div>
 
-            <p className="text-[#848487] text-xs sm:text-sm max-w-md leading-relaxed">
+            <p className="text-faint text-xs sm:text-sm max-w-md leading-relaxed">
               {settings.tagline || t('footer.brand')}
             </p>
 
@@ -35,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
                 href={settings.github}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-[#9c9c9d] hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-fill hover:bg-fill-strong border border-line flex items-center justify-center text-muted hover:text-ink transition-colors"
                 title="GitHub"
               >
                 <Github className="w-3.5 h-3.5" />
@@ -44,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
                 href={settings.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-[#9c9c9d] hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-fill hover:bg-fill-strong border border-line flex items-center justify-center text-muted hover:text-ink transition-colors"
                 title="LinkedIn"
               >
                 <Linkedin className="w-3.5 h-3.5" />
@@ -53,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
                 href={settings.twitter}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-[#9c9c9d] hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-fill hover:bg-fill-strong border border-line flex items-center justify-center text-muted hover:text-ink transition-colors"
                 title="Twitter / X"
               >
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
@@ -62,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
               </a>
               <a
                 href={`mailto:${settings.email}`}
-                className="w-8 h-8 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-[#9c9c9d] hover:text-[#ffb347] transition-colors"
+                className="w-8 h-8 rounded-full bg-fill hover:bg-fill-strong border border-line flex items-center justify-center text-muted hover:text-amber transition-colors"
                 title={t('contact.primaryEmail')}
               >
                 <Mail className="w-3.5 h-3.5" />
@@ -72,12 +74,12 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
 
           {/* Col 2: Navigation Links */}
           <div className="md:col-span-3 space-y-3 text-left">
-            <div className="text-white font-semibold font-sans text-sm">{t('footer.navigation')}</div>
-            <ul className="space-y-2 text-[#848487]">
+            <div className="text-ink font-semibold font-sans text-sm">{t('footer.navigation')}</div>
+            <ul className="space-y-2 text-faint">
               <li>
                 <button
                   onClick={() => onNavigate('/')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
+                  className="hover:text-ink transition-colors cursor-pointer text-left"
                 >
                   {t('footer.home')}
                 </button>
@@ -86,7 +88,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
                 <li key={project.id}>
                   <button
                     onClick={() => onNavigate(`/projects/${project.id}`)}
-                    className="hover:text-white transition-colors cursor-pointer text-left"
+                    className="hover:text-ink transition-colors cursor-pointer text-left"
                   >
                     {project.title}
                   </button>
@@ -95,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
               <li>
                 <button
                   onClick={() => onNavigate('contact')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
+                  className="hover:text-ink transition-colors cursor-pointer text-left"
                 >
                   {t('footer.contact')}
                 </button>
@@ -105,20 +107,20 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
 
           {/* Col 3: Products */}
           <div className="md:col-span-3 space-y-3 text-left">
-            <div className="text-white font-semibold font-sans text-sm">{t('footer.products')}</div>
-            <ul className="space-y-2 text-[#848487]">
-              {projects.map((project) => (
+            <div className="text-ink font-semibold font-sans text-sm">{t('footer.products')}</div>
+            <ul className="space-y-2 text-faint">
+              {localizedProjects.map((project) => (
                 <li key={project.id}>
                   <button
                     onClick={() => onNavigate(`/projects/${project.id}`)}
-                    className="hover:text-[#ffb347] transition-colors cursor-pointer text-left"
+                    className="hover:text-amber transition-colors cursor-pointer text-left"
                   >
                     {project.title}
                   </button>
                 </li>
               ))}
               {projects.length === 0 && (
-                <li className="text-[#666]">{t('nav.noProjects')}</li>
+                <li className="text-faint">{t('nav.noProjects')}</li>
               )}
             </ul>
           </div>
@@ -126,9 +128,9 @@ export const Footer: React.FC<FooterProps> = ({ settings, projects, onNavigate }
         </div>
 
         {/* Bottom Copyright Row */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-[11px] text-[#848487]">
+        <div className="pt-8 border-t border-line flex flex-wrap items-center justify-between gap-4 text-[11px] text-faint">
           <div className="relative">
-            <span className="text-[#848487] text-left select-none">
+            <span className="text-faint text-left select-none">
               {t('footer.rights', { studio: settings.studioName })}
             </span>
           </div>

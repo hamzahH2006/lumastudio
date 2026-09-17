@@ -13,7 +13,7 @@ export const LumaStudioLogo: React.FC<LumaStudioLogoProps> = ({
   className = 'w-5 h-5',
   size = 22,
   showWordmark = false,
-  wordmarkClassName = 'font-sans font-bold text-[15px] tracking-tight text-white',
+  wordmarkClassName = 'font-sans font-bold text-[15px] tracking-tight text-ink',
   badge,
   logoSrc = '/assets/lumastudio-logo.svg',
 }) => {
@@ -92,11 +92,11 @@ export const LumaStudioLogo: React.FC<LumaStudioLogoProps> = ({
       {/* Wordmark and Optional Badge */}
       {showWordmark && (
         <div className="flex items-center gap-2">
-          <span className={`${wordmarkClassName} group-hover:text-white/90 transition-colors`}>
+          <span className={`${wordmarkClassName} group-hover:text-ink/90 transition-colors`}>
             LumaStudio
           </span>
           {badge && (
-            <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[10px] font-sans text-[#ffb347]">
+            <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-fill-strong border border-line text-[10px] font-sans text-amber">
               {badge}
             </span>
           )}

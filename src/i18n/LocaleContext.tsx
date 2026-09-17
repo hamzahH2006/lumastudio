@@ -63,13 +63,12 @@ export const LocaleProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     root.setAttribute('lang', lang);
     root.setAttribute('data-theme', theme);
 
-    if (theme === 'light') {
-      document.body.style.backgroundColor = '#f4f4f2';
-      document.body.style.color = '#17181d';
-    } else {
-      document.body.style.backgroundColor = '#07080a';
-      document.body.style.color = '#ffffff';
-    }
+    // Body colors flow from the design tokens so both themes stay in sync.
+    const cs = getComputedStyle(root);
+    const surface = cs.getPropertyValue('--color-surface').trim();
+    const ink = cs.getPropertyValue('--color-ink').trim();
+    document.body.style.backgroundColor = surface || (theme === 'light' ? '#f4f4f1' : '#07080a');
+    document.body.style.color = ink || (theme === 'light' ? '#17181d' : '#ffffff');
 
     try {
       localStorage.setItem(LANG_KEY, lang);

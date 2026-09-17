@@ -11,9 +11,15 @@ export interface Project {
   id: string;
   slug: string;
   title: string;
+  titleEn?: string;
+  titleAr?: string;
   category: ProjectCategory;
   description: string;
+  descriptionEn?: string;
+  descriptionAr?: string;
   detailedDescription: string;
+  detailedDescriptionEn?: string;
+  detailedDescriptionAr?: string;
   screenshots: string[];
   icon?: string;
   downloadUrl: string;

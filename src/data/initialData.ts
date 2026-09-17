@@ -1,4 +1,4 @@
-import rawData from '../../data/projects.json';
+import rawData from './projects.json';
 import { Project, SiteSettings } from '../types';
 import { normalizeProject } from '../utils/normalizeProject';
 
